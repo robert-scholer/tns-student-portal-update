@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Portal Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha512-SfJp1U5TK08bAWwH2kvzI85uVTN4tSAnxr1j7rwhhtjfiw2BC5T9jpJ1rssZCvGSqt94FPujW+Ch6fZ8QVXxPg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="assets/web-files/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/web-files/portalbasictheme.css" />
+    <link rel="stylesheet" href="assets/web-files/theme.css" />
+    <link rel="stylesheet" href="assets/web-files/portalThemeOverride.css" />
+    <link rel="stylesheet" href="assets/web-files/jquery.signaturepad.css" />
+    <link rel="stylesheet" href="assets/web-files/sumoselect.css" />
+    <link rel="stylesheet" href="assets/web-files/thumbnail.css" />
+    <style>
+      #tns_cal_no_data {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 22px 28px;
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        font-family: "Titillium Web", Arial, sans-serif;
+      }
+
+      #tns_cal_no_data div {
+        width: 100%;
+      }
+
+      #tns_cal_no_data div p {
+        margin: 0;
+      }
+
+      #tns_cal_no_data div p:first-child {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: #1a1c23;
+      }
+
+      #tns_cal_no_data div p:last-child {
+        margin-top: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #474a56;
+      }
+
+      .btn-enroll {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 28px;
+        border-radius: 10px;
+        background: #f7a11f;
+        color: #1a1b1f;
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        box-shadow: 0 6px 12px rgba(247, 161, 31, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        white-space: nowrap;
+        align-self: center;
+        margin-top: 4px;
+      }
+
+      .btn-enroll:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 16px rgba(247, 161, 31, 0.45);
+        color: #1a1b1f;
+      }
+
+      .tns-road-header {
+        margin: 32px 0 16px;
+      }
+
+      .tns-road-header h1 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #1b1d22;
+        margin: 0 0 18px;
+        letter-spacing: 0.02em;
+      }
+
+      .tns-step-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        background: #ffffff;
+        padding: 18px 22px;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .tns-step-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: rgba(247, 161, 31, 0.92);
+        border: 1px solid rgba(247, 161, 31, 0.98);
+        min-width: 220px;
+        flex: 1 1 200px;
+        cursor: pointer;
+        transition: background 0.25s ease, border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .tns-step-item.current {
+        box-shadow: 0 14px 28px rgba(247, 161, 31, 0.32);
+      }
+
+      .tns-step-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #1d1f25;
+        color: #f7a11f;
+        font-size: 16px;
+      }
+
+      .tns-step-item[data-step] .tns-step-icon {
+        background: rgba(255, 255, 255, 0.24);
+        color: #1d1f25;
+        transition: background 0.25s ease, color 0.25s ease;
+      }
+
+      .tns-step-item[data-step] .tns-step-icon svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+
+      .tns-step-item[data-step] .tns-step-icon {
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .tns-step-icon svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+      .tns-step-item.tns-step-complete .tns-step-icon {
+        background: transparent;
+      }
+
+      .tns-step-item.tns-step-complete .tns-step-icon svg {
+        width: 34px;
+        height: 34px;
+      }
+
+      .tns-step-item.tns-step-complete .tns-step-icon svg {
+        width: 34px;
+        height: 34px;
+      }
+
+
+      .tns-step-item.current .tns-step-icon {
+        background: rgba(255, 255, 255, 0.24);
+        color: #1d1f25;
+      }
+
+      .tns-step-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .tns-step-text strong {
+        font-size: 16px;
+        font-weight: 700;
+        color: #1b1d22;
+      }
+
+      .tns-step-text span {
+        font-size: 13px;
+        font-weight: 600;
+        color: #5b5f6b;
+        letter-spacing: 0.02em;
+      }
+
+      .tns-step-status {
+        color: #1d1f25;
+      }
+
+      .tns-step-item:not(.tns-step-complete) .tns-step-text strong {
+        color: #1b1d22;
+      }
+
+      .tns-step-item:not(.tns-step-complete) .tns-step-status {
+        color: #1d1f25;
+      }
+
+      .tns-step-item.tns-step-progress {
+        background: rgba(246, 132, 31, 0.92);
+        border-color: rgba(246, 132, 31, 0.98);
+      }
+
+      .tns-step-item.tns-step-progress .tns-step-status {
+        color: #1d1f25;
+      }
+
+      .tns-step-item.tns-step-complete {
+        background: #c4c4c4;
+        border: 1px solid rgba(196, 196, 196, 0.85);
+        box-shadow: 0 10px 22px rgba(60, 60, 60, 0.28);
+      }
+
+      .tns-step-item.tns-step-complete .tns-step-text strong {
+        color: #ffffff;
+      }
+
+      .tns-step-item.tns-step-complete .tns-step-status {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .tns-step-item.tns-step-complete .tns-step-icon {
+        background: transparent;
+      }
+
+      .tns-mock-nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .tns-mock-nav-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tns-mock-nav-icon svg {
+        width: 22px;
+        height: 16px;
+        display: block;
+      }
+
+      .tns-mock-nav-toggle:focus {
+        outline: 2px solid #f7a11f;
+        outline-offset: 4px;
+      }
+
+      .tns-mock-nav {
+        position: absolute;
+        top: 72px;
+        right: 32px;
+        background: #1a1c23;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        min-width: 220px;
+        padding: 12px 0;
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
+        display: none;
+        z-index: 1000;
+      }
+
+      .tns-mock-nav.open {
+        display: block;
+      }
+
+      .tns-mock-nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .tns-mock-nav li {
+        margin: 0;
+      }
+
+      .tns-mock-nav a {
+        display: block;
+        padding: 10px 20px;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .tns-mock-nav a:hover {
+        background: rgba(247, 161, 31, 0.12);
+        color: #f7a11f;
+      }
+
+      .tns-mock-header {
+        background: #1d1f25;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 32px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+      }
+
+      .tns-mock-header-brand img {
+        height: 36px;
+        width: auto;
+        display: block;
+      }
+
+      .tns-mock-signin {
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding-left: 18px;
+        border-left: 2px solid #f7a11f;
+      }
+
+      .tns-mock-signin:hover,
+      .tns-mock-signin:focus {
+        color: #f7a11f;
+        outline: none;
+      }
+
+      .tns-mock-footer {
+        background: #1d1f25;
+        color: #f7a11f;
+        padding: 18px 32px;
+        text-align: center;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .tns-journey-card {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background: #1d1f25;
+        border-radius: 14px;
+        padding: 22px 26px;
+        flex-wrap: wrap;
+        border: 1px solid rgba(247, 161, 31, 0.45);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .tns-journey-card:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+      }
+
+      .tns-journey-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(247, 161, 31, 0.12);
+        color: #f7a11f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .tns-journey-content {
+        flex: 1 1 260px;
+      }
+
+      .tns-journey-content h3 {
+        margin: 0 0 6px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #f7a11f;
+        letter-spacing: 0.01em;
+      }
+
+      .tns-journey-content h3 span {
+        display: inline-block;
+        margin-left: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #f7a11f;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .tns-journey-content p {
+        margin: 0;
+        font-size: 15px;
+        color: #ffffff;
+        line-height: 1.4;
+      }
+
+      .tns-journey-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 160px;
+      }
+
+      .tns-journey-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 0 0 12px;
+      }
+
+      .tns-panel-heading-icon {
+        margin-right: 10px;
+        color: #f7a11f;
+        font-size: 16px;
+      }
+
+      .tns-outline-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 26px;
+        border-radius: 999px;
+        border: 2px solid #f7a11f;
+        font-weight: 700;
+        color: #f7a11f;
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+
+      .tns-outline-button:hover {
+        background: #f7a11f;
+        color: #1a1c23;
+      }
+
+      .tns-journey-icon:focus {
+        outline: 2px solid rgba(247, 161, 31, 0.8);
+        outline-offset: 3px;
+      }
+
+      .tns-journey-card.tns-completed {
+        background: #1d1f25;
+        border: 1px solid rgba(247, 161, 31, 0.45);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .tns-journey-card.tns-completed .tns-journey-icon {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .tns-journey-card.tns-completed .tns-journey-content h3 {
+        color: #f7a11f;
+      }
+
+      .tns-journey-card.tns-completed .tns-journey-content p {
+        color: #ffffff;
+      }
+
+      #maincontainer.tns_mainWrap {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        display: block;
+      }
+
+      #maincontainer.tns_mainWrap > section,
+      .tns_main {
+        width: 100%;
+        margin: 0;
+        padding: 0 32px;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 768px) {
+        #maincontainer.tns_mainWrap > section,
+        .tns_main {
+          padding: 0 20px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .tns-step-strip {
+          flex-direction: column;
+        }
+
+        .tns-journey-card {
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="tns-mock-header">
+      <div class="tns-mock-header-brand">
+        <img src="assets/tns-logo.png" alt="The Next Street logo" />
+      </div>
+      <button class="tns-mock-nav-toggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="tnsMockNav">
+        <span class="tns-mock-nav-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg" role="presentation">
+            <rect x="0" y="0" width="24" height="2.5" fill="#f7a11f" rx="1.25"></rect>
+            <rect x="0" y="6.75" width="24" height="2.5" fill="#f7a11f" rx="1.25"></rect>
+            <rect x="0" y="13.5" width="24" height="2.5" fill="#f7a11f" rx="1.25"></rect>
+          </svg>
+        </span>
+        Menu
+      </button>
+      <nav id="tnsMockNav" class="tns-mock-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">My Schedule</a></li>
+          <li><a href="#">Student Resources</a></li>
+          <li><a href="#">Billing</a></li>
+          <li><a href="#">Files</a></li>
+          <li><a href="#">Add Services</a></li>
+          <li><a href="#">Insurance for New Drivers</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="tns-mock-signin">Sign in</a>
+    </header>
+    <div id="loader" class="loader-container" style="display: none;">
+      <div class="loader"></div>
+    </div>
+
+<main id="maincontainer" class="tns_mainWrap">
+  <section class="tns_main">
+    <div id="todayClass" class="customAlert" style="display: none;">
+      <h4>
+        You have a class today!
+      </h4>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+          aria-expanded="false">
+          Upcoming Class
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="alertDropdown">
+          <li>
+            <div>
+              <p>00:50 AM Classroom asdf asdf asd fas dfaf s </p>
+              <a class="btn btn-primary" href="#">Classroom Link</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="signDrive" class="customAlert" style="display: none;">
+      <h4>
+        Thank you for completing your drive!
+      </h4>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
+          aria-expanded="false">
+          Please sign here
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="drivingDropdown">
+          <li>
+            <div>
+              <p>00:50 AM Classroom asdf asdf asd fas dfaf s </p>
+              <a class="btn btn-primary" href="#">Classroom Link</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="i3gt53" class="container-fluid">
+      <div class="tns-road-header">
+        <h1>Your Road to Getting Licensed</h1>
+        <div class="tns-step-strip">
+          <div class="tns-step-item current" data-step="enroll" data-state="incomplete">
+            <span class="tns-step-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Enroll / Add Services status"><i class="fa fa-arrow-right"></i></span>
+            <div class="tns-step-text">
+              <strong>Enroll / Add Services</strong>
+              <span class="tns-step-status">Start Here</span>
+            </div>
+          </div>
+          <div class="tns-step-item" data-step="profile" data-state="incomplete">
+            <span class="tns-step-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Student Profile status"><i class="fa fa-user"></i></span>
+            <div class="tns-step-text">
+              <strong>Student Profile</strong>
+              <span class="tns-step-status">Not Started</span>
+            </div>
+          </div>
+          <div class="tns-step-item" data-step="permit" data-state="incomplete">
+            <span class="tns-step-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Learner's Permit status"><i class="fa fa-id-card-o"></i></span>
+            <div class="tns-step-text">
+              <strong>Learner's Permit</strong>
+              <span class="tns-step-status">Incomplete</span>
+            </div>
+          </div>
+          <div class="tns-step-item" data-step="scheduling" data-state="incomplete">
+            <span class="tns-step-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Scheduling status"><i class="fa fa-calendar"></i></span>
+            <div class="tns-step-text">
+              <strong>Schedule Lessons</strong>
+              <span class="tns-step-status">Not Started</span>
+            </div>
+          </div>
+          <div class="tns-step-item" data-step="completion" data-state="incomplete">
+            <span class="tns-step-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Completion Certificate status"><i class="fa fa-file-text-o"></i></span>
+            <div class="tns-step-text">
+              <strong>Completion Certificate</strong>
+              <span class="tns-step-status">Pending Program Completion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 24px;">
+        <div class="col-sm-12">
+          <div class="tns-journey-list" id="tnsJourneyList">
+            <div class="tns-journey-card" data-step="enroll" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Enroll / Add Services completion">
+                <i class="fa fa-plus-circle"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Enroll / Add Services</h3>
+                <p>Begin your driver training — enroll now to get started.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="#" class="tns-outline-button">Enroll Now</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="profile" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Student Profile completion">
+                <i class="fa fa-user"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Student Profile</h3>
+                <p>Complete your profile to provide the required information before you start scheduling.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="/student-profile" class="tns-outline-button">View / Edit</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="permit" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Learner's Permit completion">
+                <i class="fa fa-id-card"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Learner's Permit</h3>
+                <p>Add your permit details to keep your journey moving forward and unlock behind-the-wheel lessons.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="/student-permit-form" class="tns-outline-button">Add Permit</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="classroom" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Classroom Sessions completion">
+                <i class="fa fa-play-circle"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Open Classroom Sessions</h3>
+                <p>You can start your classroom sessions anytime — a permit isn’t required.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="/history-classroom" class="tns-outline-button">Schedule / View</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="driving" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Driving Lessons completion">
+                <i class="fa fa-car"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Open Driving Lessons</h3>
+                <p>You'll need to add your Learner's Permit before you can schedule driving lessons.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="/history-driving-lessons" class="tns-outline-button">Plan Lessons</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="testing" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle License Testing completion">
+                <i class="fa fa-check-square"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>License Testing</h3>
+                <p>Ready to test? Book your license testing session to secure your spot.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="/History-License-Testing" class="tns-outline-button">Schedule Test</a>
+              </div>
+            </div>
+            <div class="tns-journey-card" data-step="completion" data-state="incomplete">
+              <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Completion Certificate completion">
+                <i class="fa fa-file-text"></i>
+              </div>
+              <div class="tns-journey-content">
+                <h3>Completion Certificate</h3>
+                <p>Completion certificate will be available once program requirements are fulfilled.</p>
+              </div>
+              <div class="tns-journey-action">
+                <a href="#" class="tns-outline-button">Pending Program Completion</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>My Schedule</h2>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div id="iwu0d1" class="tns-calendarWrap">
+            <div id="calendar"></div>
+            <div id="tns_cal_no_data" class="tns_cal_no_data">
+              <div>
+                <p>You don't have any upcoming sessions yet.</p>
+                <p>Once you book, your classes, driving lessons, and tests will appear here.</p>
+              </div>
+              <a href="#" class="btn-enroll">Enroll in a Class</a>
+            </div>
+          </div>
+          <div id="calendarWrapLoader" class="sub-loader-container" style="display: none;">
+            <div class="sub-loader"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="row sectionBlockLayout text-left"
+  style="display: none; flex-wrap: wrap; margin: 0px; min-height: auto; padding: 8px;">
+  <div class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">
+    <div class="col-md-12 columnBlockLayout"
+      style="flex-grow: 1; display: flex; flex-direction: column; min-width: 250px; word-break: break-word;"></div>
+  </div>
+</div>
+<div class="modal fade" id="t_c_modal" tabindex="-1" role="dialog" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terms & Condition</h5>
+      </div>
+      <div class="modal-body">
+        <div id="t_c_body"></div>
+        <div class="signature-container" id="signatureContainer">
+          <form class="sigpad2"></form>
+          <form method="post" action="" class="sigPad">
+            <small>Draw your signature</small>
+            <div class="sig sigWrapper">
+              <div class="typed"></div>
+              <canvas class="pad" width="220" id="Canvas_P" height="80"></canvas>
+              <input type="hidden" name="output" class="output">
+            </div>
+            <div class="signBtn">
+              <button type="submit" id="signme" class="bbtn btn-default">Sign</button>
+            </div>
+          </form>
+        </div>
+        <div id="signedImageContainer" style="display: none;">
+          <div>
+            <img class="pad" id="signedImage" />
+            <div class="signBtn">
+              <button id="resetSign" class="bbtn btn-default">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="t_c_btn_accept">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="schedule_apt" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Schedule</h4>
+      </div>
+      <div class="modal-body">
+        <p>How would you like to schedule your classes?</p>
+        <div class='contaier-fluid'>
+          <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+              <a class="btn btn-primary" href="/student-bulk-schedule">Choose a Course Schedule</a>
+            </div>
+            <div class="col-sm-4">
+              <button class="btn btn-primary" onclick='studentsingleSchedule()' type="button">Build My Own Schedule</button>
+            </div>            
+          </div>                    
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="modal fade" id="cancelConfirmModal" tabindex="-1" role="dialog" aria-labelledby="showErrorLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">From The Next Street</h4>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 15px; margin: 0;">You are cancelling this drive less than 24 hours from the scheduled start date.  If you proceed you will incure a $100 late cancellation fee.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="cancelConfirmBtn" onclick="confirmScheduleCancel()">Ok</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer class="tns-mock-footer">
+      <p>Copyright © 2025 The Next Street. All rights reserved.</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const completedIconSvg =
+          '<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#7CC043"/><path d="M27.2 41.6 18.5 32.9l-3.9 3.9 12.6 12.6 22.6-22.6-3.9-3.9z" fill="#FFFFFF"/></svg>';
+
+        const topStepConfig = {
+          enroll: {
+            iconDefault: "fa-arrow-right",
+            stateSequence: ["incomplete", "complete"],
+            states: {
+              incomplete: { text: "Start Here" },
+              complete: { text: "Complete" },
+            },
+          },
+          profile: {
+            iconDefault: "fa-user",
+            stateSequence: ["incomplete", "complete"],
+            states: {
+              incomplete: { text: "Not Started" },
+              complete: { text: "Complete" },
+            },
+          },
+          permit: {
+            iconDefault: "fa-id-card-o",
+            stateSequence: ["incomplete", "complete"],
+            states: {
+              incomplete: { text: "Incomplete" },
+              complete: { text: "Complete" },
+            },
+          },
+          scheduling: {
+            iconDefault: "fa-calendar",
+            stateSequence: ["incomplete", "progress", "complete"],
+            states: {
+              incomplete: { text: "Not Started" },
+              progress: { text: "In Progress" },
+              complete: { text: "Complete" },
+            },
+          },
+          completion: {
+            iconDefault: "fa-file-text-o",
+            stateSequence: ["incomplete", "complete"],
+            states: {
+              incomplete: { text: "Pending Program Completion" },
+              complete: { text: "Issued in Files" },
+            },
+          },
+        };
+
+        const stepConfig = {
+          enroll: {
+            iconDefault: "fa-plus-circle",
+            incomplete: {
+              text: "Begin your driver training — enroll now to get started.",
+              button: { label: "Enroll Now", href: "#" },
+            },
+            complete: {
+              text: "You're officially enrolled — great job getting started! Visit Student Resources to stay on the easiest road to your driver's license.",
+              button: { label: "Student Resources", href: "/student-resources" },
+            },
+          },
+          profile: {
+            iconDefault: "fa-user",
+            incomplete: {
+              text: "Complete your profile to provide the required information before you start scheduling.",
+              button: { label: "View / Edit", href: "/student-profile" },
+            },
+            complete: {
+              text: "Profile complete — way to go! Review your information anytime to make quick updates.",
+              button: { label: "View Profile Info", href: "/student-profile" },
+            },
+          },
+          permit: {
+            iconDefault: "fa-id-card",
+            incomplete: {
+              text: "Add your permit details to keep your journey moving forward and unlock behind-the-wheel lessons.",
+              button: { label: "Add Permit", href: "/student-permit-form" },
+            },
+            complete: {
+              text: "Permit added successfully! Double-check the holding requirements so you're ready for lessons.",
+              button: { label: "View Permit Info", href: "/student-permit-form" },
+            },
+          },
+          classroom: {
+            iconDefault: "fa-play-circle",
+            incomplete: {
+              text: "You can start your classroom sessions anytime — a permit isn’t required.",
+              button: { label: "Schedule / View", href: "/history-classroom" },
+            },
+            complete: {
+              text: "Classroom attendance recorded! Remember to complete any follow-up requirements once your session is processed.",
+              button: { label: "Schedule / View", href: "/history-classroom" },
+            },
+          },
+          driving: {
+            iconDefault: "fa-car",
+            incomplete: {
+              text: "You'll need to add your Learner's Permit before you can schedule driving lessons.",
+              button: { label: "Plan Lessons", href: "/history-driving-lessons" },
+            },
+            complete: {
+              text: "Lessons scheduled! Review what to bring and the skills you'll cover before each drive.",
+              button: { label: "View My Lessons", href: "/history-driving-lessons" },
+            },
+          },
+          testing: {
+            iconDefault: "fa-check-square",
+            incomplete: {
+              text: "Ready to test? Book your license testing session to secure your spot.",
+              button: { label: "Schedule Test", href: "/History-License-Testing" },
+            },
+            complete: {
+              text: "Test booked! Keep preparing so you're confident and ready on test day.",
+              button: { label: "View Test Details", href: "/History-License-Testing" },
+            },
+          },
+          completion: {
+            iconDefault: "fa-file-text",
+            incomplete: {
+              text: "Completion certificate will be available once program requirements are fulfilled.",
+              button: { label: "Pending Program Completion", href: "#" },
+            },
+            complete: {
+              text: "Certificate issued! Find it anytime under your Files.",
+              button: { label: "Issued in Files", href: "/files" },
+            },
+          },
+        };
+
+        const topStepItems = document.querySelectorAll(
+          ".tns-step-item[data-step]"
+        );
+
+        const journeyCards = document.querySelectorAll(
+          "#tnsJourneyList .tns-journey-card[data-step]"
+        );
+
+        function renderDefaultIcon(iconWrap, iconClass) {
+          iconWrap.innerHTML = '<i class="fa ' + iconClass + '"></i>';
+        }
+
+        function renderCompletedIcon(iconWrap) {
+          iconWrap.innerHTML = completedIconSvg;
+        }
+
+        function applyTopStepState(item, state) {
+          const config = topStepConfig[item.dataset.step];
+          if (!config || !config.states[state]) return;
+
+          const statusEl = item.querySelector(".tns-step-status");
+          const iconWrap = item.querySelector(".tns-step-icon");
+          const titleEl = item.querySelector(".tns-step-text strong");
+          const titleText = titleEl ? titleEl.textContent.trim() : "step";
+
+          item.dataset.state = state;
+        item.classList.remove("tns-step-complete", "tns-step-progress");
+
+        if (state === "complete") {
+          item.classList.add("tns-step-complete");
+        } else if (state === "progress") {
+          item.classList.add("tns-step-progress");
+        }
+
+          if (statusEl) {
+            statusEl.textContent = config.states[state].text;
+          }
+
+          if (iconWrap) {
+            if (state === "complete") {
+              renderCompletedIcon(iconWrap);
+              iconWrap.setAttribute("aria-pressed", "true");
+              iconWrap.setAttribute(
+                "aria-label",
+                `Mark ${titleText} as not completed`
+              );
+            } else {
+              renderDefaultIcon(iconWrap, config.iconDefault);
+              iconWrap.setAttribute("aria-pressed", "false");
+              iconWrap.setAttribute(
+                "aria-label",
+                `Mark ${titleText} as completed`
+              );
+            }
+          }
+        }
+
+        function toggleTopStepState(item) {
+          const config = topStepConfig[item.dataset.step];
+          if (!config) return;
+          const sequence = config.stateSequence || ["incomplete", "complete"];
+          const currentState = item.dataset.state || sequence[0];
+          const currentIndex = sequence.indexOf(currentState);
+          const nextIndex =
+            currentIndex === -1 ? 0 : (currentIndex + 1) % sequence.length;
+          const nextState = sequence[nextIndex];
+          applyTopStepState(item, nextState);
+        }
+
+        function applyState(card, state) {
+          const step = card.dataset.step;
+          const config = stepConfig[step];
+          if (!config) return;
+
+          const iconWrap = card.querySelector(".tns-journey-icon");
+          const bodyCopy = card.querySelector(".tns-journey-content p");
+          const actionLink = card.querySelector(".tns-journey-action a");
+          const titleEl = card.querySelector(".tns-journey-content h3");
+          const titleText = titleEl ? titleEl.textContent.trim() : "step";
+
+          card.dataset.state = state;
+
+          if (bodyCopy) {
+            bodyCopy.textContent = config[state].text;
+          }
+
+          if (actionLink) {
+            actionLink.textContent = config[state].button.label;
+            if (config[state].button.href) {
+              actionLink.setAttribute("href", config[state].button.href);
+            } else {
+              actionLink.removeAttribute("href");
+            }
+            actionLink.parentElement.style.display = "";
+          }
+
+          if (iconWrap) {
+            if (state === "complete") {
+              renderCompletedIcon(iconWrap);
+              card.classList.add("tns-completed");
+              iconWrap.setAttribute("aria-pressed", "true");
+              iconWrap.setAttribute(
+                "aria-label",
+                `Mark ${titleText} as not completed`
+              );
+            } else {
+              renderDefaultIcon(iconWrap, config.iconDefault);
+              card.classList.remove("tns-completed");
+              iconWrap.setAttribute("aria-pressed", "false");
+              iconWrap.setAttribute(
+                "aria-label",
+                `Mark ${titleText} as completed`
+              );
+            }
+          }
+        }
+
+        function toggleCardState(card) {
+          const nextState = card.dataset.state === "complete" ? "incomplete" : "complete";
+          applyState(card, nextState);
+        }
+
+        topStepItems.forEach((item) => {
+          const config = topStepConfig[item.dataset.step];
+          if (!config) return;
+          const initialState = config.stateSequence
+            ? config.stateSequence[0]
+            : "incomplete";
+          applyTopStepState(item, initialState);
+
+          const iconWrap = item.querySelector(".tns-step-icon");
+          if (!iconWrap) return;
+
+          iconWrap.addEventListener("click", (event) => {
+            event.preventDefault();
+            toggleTopStepState(item);
+          });
+
+          iconWrap.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleTopStepState(item);
+            }
+          });
+        });
+
+        journeyCards.forEach((card) => {
+          const iconWrap = card.querySelector(".tns-journey-icon");
+          if (!iconWrap) return;
+
+          applyState(card, "incomplete");
+
+          iconWrap.addEventListener("click", (event) => {
+            event.preventDefault();
+            toggleCardState(card);
+          });
+
+          iconWrap.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              toggleCardState(card);
+            }
+          });
+        });
+
+        const navToggle = document.querySelector(".tns-mock-nav-toggle");
+        const navMenu = document.getElementById("tnsMockNav");
+        const navLinks = navMenu ? Array.from(navMenu.querySelectorAll("a")) : [];
+        if (navToggle && navMenu) {
+          document.addEventListener("click", (event) => {
+            if (
+              navMenu.classList.contains("open") &&
+              !navMenu.contains(event.target) &&
+              event.target !== navToggle
+            ) {
+              navMenu.classList.remove("open");
+              navToggle.setAttribute("aria-expanded", "false");
+            }
+          });
+          navLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+              navMenu.classList.remove("open");
+              navToggle.setAttribute("aria-expanded", "false");
+            });
+          });
+          function toggleNav() {
+            const isOpen = navMenu.classList.toggle("open");
+            navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          }
+          navToggle.addEventListener("click", toggleNav);
+          const navIcon = navToggle.querySelector(".tns-mock-nav-icon");
+          if (navIcon) {
+            navIcon.addEventListener("click", (event) => {
+              event.stopPropagation();
+              toggleNav();
+            });
+          }
+        }
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/web-files/config.js"></script>
+    <script src="assets/web-files/jquery.signaturepad.js"></script>
+    <script src="assets/web-files/jquery.sumoselect.min.js"></script>
+    <script src="assets/web-files/fullcalendar.js"></script>
+    <script src="assets/web-files/shopRedirect.js"></script>
+  </body>
+</html>
+
