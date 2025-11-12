@@ -364,6 +364,39 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
+      .tns-journey-card.collapsible {
+        cursor: pointer;
+      }
+
+      .tns-journey-card.collapsible .tns-journey-detail {
+        flex: 1 0 100%;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 28px;
+        margin-top: 0;
+        transition: max-height 0.3s ease, padding 0.3s ease, margin-top 0.3s ease;
+        background: #ffffff;
+        border-radius: 12px;
+      }
+
+      .tns-journey-placeholder {
+        min-height: 200px;
+        border-radius: 10px;
+        border: 1px dashed rgba(26, 28, 35, 0.15);
+        background: rgba(244, 245, 249, 0.95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #4d4f57;
+        font-size: 15px;
+      }
+
+      .tns-journey-card.tns-open .tns-journey-detail {
+        max-height: 260px;
+        padding: 24px 28px;
+        margin-top: 18px;
+      }
+
       .tns-journey-card:hover {
         transform: translateY(-1px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
@@ -639,7 +672,13 @@
                 <a href="#" class="tns-outline-button">Enroll Now</a>
               </div>
             </div>
-            <div class="tns-journey-card" data-step="profile" data-state="incomplete">
+            <div
+              class="tns-journey-card collapsible"
+              data-step="profile"
+              data-state="incomplete"
+              tabindex="0"
+              aria-expanded="false"
+            >
               <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Student Profile completion">
                 <i class="fa fa-user"></i>
               </div>
@@ -650,8 +689,19 @@
               <div class="tns-journey-action">
                 <a href="/student-profile" class="tns-outline-button">View / Edit</a>
               </div>
+              <div class="tns-journey-detail" aria-hidden="true">
+                <div class="tns-journey-placeholder">
+                  <span>Reserved space for the student profile grid and details.</span>
+                </div>
+              </div>
             </div>
-            <div class="tns-journey-card" data-step="permit" data-state="incomplete">
+            <div
+              class="tns-journey-card collapsible"
+              data-step="permit"
+              data-state="incomplete"
+              tabindex="0"
+              aria-expanded="false"
+            >
               <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Learner's Permit completion">
                 <i class="fa fa-id-card"></i>
               </div>
@@ -662,8 +712,19 @@
               <div class="tns-journey-action">
                 <a href="/student-permit-form" class="tns-outline-button">Add Permit</a>
               </div>
+              <div class="tns-journey-detail" aria-hidden="true">
+                <div class="tns-journey-placeholder">
+                  <span>Reserved space for learner's permit records.</span>
+                </div>
+              </div>
             </div>
-            <div class="tns-journey-card" data-step="classroom" data-state="incomplete">
+            <div
+              class="tns-journey-card collapsible"
+              data-step="classroom"
+              data-state="incomplete"
+              tabindex="0"
+              aria-expanded="false"
+            >
               <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Classroom Sessions completion">
                 <i class="fa fa-play-circle"></i>
               </div>
@@ -674,8 +735,19 @@
               <div class="tns-journey-action">
                 <a href="/history-classroom" class="tns-outline-button">Schedule / View</a>
               </div>
+              <div class="tns-journey-detail" aria-hidden="true">
+                <div class="tns-journey-placeholder">
+                  <span>Reserved space for classroom session listings.</span>
+                </div>
+              </div>
             </div>
-            <div class="tns-journey-card" data-step="driving" data-state="incomplete">
+            <div
+              class="tns-journey-card collapsible"
+              data-step="driving"
+              data-state="incomplete"
+              tabindex="0"
+              aria-expanded="false"
+            >
               <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle Driving Lessons completion">
                 <i class="fa fa-car"></i>
               </div>
@@ -686,8 +758,19 @@
               <div class="tns-journey-action">
                 <a href="/history-driving-lessons" class="tns-outline-button">Plan Lessons</a>
               </div>
+              <div class="tns-journey-detail" aria-hidden="true">
+                <div class="tns-journey-placeholder">
+                  <span>Reserved space for driving lesson schedules and instructors.</span>
+                </div>
+              </div>
             </div>
-            <div class="tns-journey-card" data-step="testing" data-state="incomplete">
+            <div
+              class="tns-journey-card collapsible"
+              data-step="testing"
+              data-state="incomplete"
+              tabindex="0"
+              aria-expanded="false"
+            >
               <div class="tns-journey-icon" role="button" tabindex="0" aria-pressed="false" aria-label="Toggle License Testing completion">
                 <i class="fa fa-check-square"></i>
               </div>
@@ -697,6 +780,11 @@
               </div>
               <div class="tns-journey-action">
                 <a href="/History-License-Testing" class="tns-outline-button">Schedule Test</a>
+              </div>
+              <div class="tns-journey-detail" aria-hidden="true">
+                <div class="tns-journey-placeholder">
+                  <span>Reserved space for license testing availability and progress.</span>
+                </div>
               </div>
             </div>
             <div class="tns-journey-card" data-step="completion" data-state="incomplete">
@@ -1099,6 +1187,37 @@
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
               toggleTopStepState(item);
+            }
+          });
+        });
+
+        const collapsibleCards = document.querySelectorAll(
+          "#tnsJourneyList .tns-journey-card.collapsible"
+        );
+
+        collapsibleCards.forEach((card) => {
+          const detail = card.querySelector(".tns-journey-detail");
+          if (!detail) return;
+
+          card.addEventListener("click", (event) => {
+            if (
+              event.target.closest(".tns-journey-icon") ||
+              event.target.closest(".tns-outline-button")
+            ) {
+              return;
+            }
+            const isOpen = card.classList.toggle("tns-open");
+            detail.setAttribute("aria-hidden", isOpen ? "false" : "true");
+            card.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          });
+
+          card.addEventListener("keydown", (event) => {
+            if (event.target !== card) return;
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              const isOpen = card.classList.toggle("tns-open");
+              detail.setAttribute("aria-hidden", isOpen ? "false" : "true");
+              card.setAttribute("aria-expanded", isOpen ? "true" : "false");
             }
           });
         });
