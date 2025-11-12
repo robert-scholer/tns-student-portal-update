@@ -466,7 +466,9 @@
         font-size: 16px;
       }
 
-      .tns-outline-button {
+      .tns-outline-button,
+      .tns-outline-button:link,
+      .tns-outline-button:visited {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -475,14 +477,22 @@
         border: 2px solid #f7a11f;
         font-weight: 700;
         color: #f7a11f;
+        background: transparent;
         text-decoration: none;
         letter-spacing: 0.02em;
-        transition: background 0.2s ease, color 0.2s ease;
+        transition: background 0.2s ease, color 0.2s ease,
+          box-shadow 0.2s ease, transform 0.2s ease;
       }
 
-      .tns-outline-button:hover {
+      .tns-outline-button:hover,
+      .tns-outline-button:focus,
+      .tns-outline-button:active {
         background: #f7a11f;
         color: #1a1c23;
+        text-decoration: none;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 16px rgba(247, 161, 31, 0.45);
+        outline: none;
       }
 
       .tns-journey-icon:focus {
