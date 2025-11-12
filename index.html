@@ -1197,13 +1197,15 @@
 
         collapsibleCards.forEach((card) => {
           const detail = card.querySelector(".tns-journey-detail");
+          const actionLink = card.querySelector(".tns-outline-button");
           if (!detail) return;
 
           card.addEventListener("click", (event) => {
-            if (
-              event.target.closest(".tns-journey-icon") ||
-              event.target.closest(".tns-outline-button")
-            ) {
+            if (event.target.closest(".tns-journey-icon")) {
+              return;
+            }
+            if (event.target.closest(".tns-outline-button")) {
+              event.preventDefault();
               return;
             }
             const isOpen = card.classList.toggle("tns-open");
@@ -1220,6 +1222,24 @@
               card.setAttribute("aria-expanded", isOpen ? "true" : "false");
             }
           });
+
+          if (actionLink) {
+            actionLink.addEventListener("click", (event) => {
+              event.preventDefault();
+              const isOpen = card.classList.toggle("tns-open");
+              detail.setAttribute("aria-hidden", isOpen ? "false" : "true");
+              card.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+
+            actionLink.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                const isOpen = card.classList.toggle("tns-open");
+                detail.setAttribute("aria-hidden", isOpen ? "false" : "true");
+                card.setAttribute("aria-expanded", isOpen ? "true" : "false");
+              }
+            });
+          }
         });
 
         journeyCards.forEach((card) => {
