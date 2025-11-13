@@ -1295,15 +1295,27 @@
             toggleCardState(card);
           });
 
-        iconWrap.addEventListener(
-          "touchstart",
-          (event) => {
+        function handleTouchToggle(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          toggleCardState(card);
+        }
+
+        iconWrap.addEventListener("touchstart", handleTouchToggle, {
+          passive: false,
+        });
+
+        iconWrap.addEventListener("touchend", handleTouchToggle, {
+          passive: false,
+        });
+
+        iconWrap.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "touch") {
             event.preventDefault();
             event.stopPropagation();
             toggleCardState(card);
-          },
-          { passive: false }
-        );
+          }
+        });
 
           iconWrap.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
