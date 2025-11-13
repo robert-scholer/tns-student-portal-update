@@ -1291,12 +1291,24 @@
 
           iconWrap.addEventListener("click", (event) => {
             event.preventDefault();
+          event.stopPropagation();
             toggleCardState(card);
           });
+
+        iconWrap.addEventListener(
+          "touchstart",
+          (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleCardState(card);
+          },
+          { passive: false }
+        );
 
           iconWrap.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
               event.preventDefault();
+            event.stopPropagation();
               toggleCardState(card);
             }
           });
