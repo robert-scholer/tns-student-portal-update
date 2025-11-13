@@ -543,12 +543,16 @@
       @media (max-width: 768px) {
         .tns-step-strip {
           flex-direction: column;
-          padding: 18px 18px;
+          padding: 16px 18px;
+          gap: 12px;
         }
 
         .tns-step-item {
           min-width: 0;
           width: 100%;
+          flex: 0 0 auto;
+          padding: 12px 16px;
+          align-items: center;
         }
 
         .tns-step-text strong {
@@ -557,6 +561,23 @@
 
         .tns-step-text span {
           font-size: 13px;
+        }
+
+        .tns-step-text {
+          gap: 4px;
+        }
+
+        .tns-step-icon {
+          width: 34px;
+          height: 34px;
+        }
+
+        .tns-step-item > * {
+          flex-shrink: 0;
+        }
+
+        .tns-step-item .tns-step-text {
+          flex: 1 1 auto;
         }
       }
     </style>
