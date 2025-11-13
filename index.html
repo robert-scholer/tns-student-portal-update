@@ -1289,32 +1289,25 @@
 
           applyState(card, "incomplete");
 
-          iconWrap.addEventListener("click", (event) => {
-            event.preventDefault();
-          event.stopPropagation();
-            toggleCardState(card);
-          });
-
-        function handleTouchToggle(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          toggleCardState(card);
-        }
-
-        iconWrap.addEventListener("touchstart", handleTouchToggle, {
-          passive: false,
-        });
-
-        iconWrap.addEventListener("touchend", handleTouchToggle, {
-          passive: false,
-        });
+        let handledTouch = false;
 
         iconWrap.addEventListener("pointerdown", (event) => {
           if (event.pointerType === "touch") {
+            handledTouch = true;
             event.preventDefault();
             event.stopPropagation();
             toggleCardState(card);
           }
+        });
+
+        iconWrap.addEventListener("click", (event) => {
+          if (handledTouch) {
+            handledTouch = false;
+            return;
+          }
+          event.preventDefault();
+          event.stopPropagation();
+          toggleCardState(card);
         });
 
           iconWrap.addEventListener("keydown", (event) => {
